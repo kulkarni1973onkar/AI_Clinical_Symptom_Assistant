@@ -165,16 +165,48 @@ The Present/Absent symptom classifier is still available as
 - SecTag depends on standard headers; very free-form notes may not section
   cleanly.
 
-## Deployment on Vercel
+## Deployment
 
-This repository includes a Vercel static deploy configuration at `vercel.json`
-and a simple landing page under `public/index.html`.
+### Streamlit Community Cloud
 
-> The full app is a Streamlit frontend that depends on a local Ollama model
-> server, so it cannot run directly as a Vercel serverless function without
-> being ported to a supported web framework.
+This repository is ready for Streamlit Community Cloud.
 
-To preview the actual application locally:
+- Connect the GitHub repo to Streamlit Cloud.
+- Use `app.py` as the app entrypoint.
+- Streamlit Cloud installs Python dependencies from `requirements.txt`.
+- `packages.txt` installs system-level OCR dependencies: `tesseract-ocr` and
+  `poppler-utils`.
+
+If you want the cloud deployment to use an external Ollama server, set the
+base URL on the app UI or via environment configuration in Streamlit Cloud.
+
+### Docker / VPS / Fly.io / Render / Railway
+
+A `Dockerfile` is included to run the app in a container with the required
+Python dependencies and system packages.
+
+Build and run locally:
+
+```bash
+docker build -t medical-note-assistant .
+docker run -p 8501:8501 medical-note-assistant
+```
+
+For cloud hosts like Render, Railway, or Fly.io, you can deploy the same
+container image or use the `Procfile` with:
+
+```bash
+streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+```
+
+### Vercel
+
+This repository still includes a static Vercel landing page at `public/index.html`.
+
+> The full Streamlit app cannot be deployed directly on Vercel as a serverless
+> function because Streamlit is not a compatible Python runtime for Vercel.
+
+### Local preview
 
 ```bash
 python -m venv .venv
