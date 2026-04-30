@@ -1,0 +1,5 @@
+# Ignore everything except the static landing page and config.
+*
+!public/
+!public/**
+!vercel.json
