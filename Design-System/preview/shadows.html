@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:32px;background:#f8fafc;font-family:var(--font-sans);}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .item{display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .box{width:120px;height:80px;background:#fff;border-radius:8px;border:1px solid var(--border);}
+  .lbl{font-family:var(--font-mono);font-size:11px;color:var(--fg-muted);text-align:center;}
+  .lbl b{display:block;color:var(--fg);font-weight:500;font-size:12px;margin-bottom:2px;}
+</style></head><body>
+<div class="grid">
+  <div class="item"><div class="box" style="box-shadow:0 1px 2px rgba(15,23,42,0.04)"></div><div class="lbl"><b>shadow-sm</b>cards default</div></div>
+  <div class="item"><div class="box" style="box-shadow:0 4px 12px rgba(15,23,42,0.06)"></div><div class="lbl"><b>shadow-md</b>hover · dropdown</div></div>
+  <div class="item"><div class="box" style="box-shadow:0 12px 28px rgba(15,23,42,0.08)"></div><div class="lbl"><b>shadow-lg</b>modal · composer</div></div>
+</div>
+</body></html>

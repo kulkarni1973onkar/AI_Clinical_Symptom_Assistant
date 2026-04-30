@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:#fff;font-family:var(--font-sans);}
+  .composer{display:flex;gap:8px;align-items:flex-end;border:1px solid #cbd5e1;border-radius:8px;padding:8px;background:#fff;box-shadow:0 1px 2px rgba(15,23,42,0.04);transition:all 120ms;}
+  .composer:focus-within{border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,0.2);}
+  .composer textarea{flex:1;border:0;outline:0;resize:none;font-family:inherit;font-size:14px;line-height:1.5;padding:6px 8px;background:transparent;color:var(--fg);}
+  .composer textarea::placeholder{color:var(--fg-subtle);}
+  .send{background:#0f766e;color:#fff;border:0;border-radius:6px;padding:8px 14px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;}
+  .send:hover{background:#115e59;}
+  .input{display:block;width:calc(100% - 24px);padding:9px 12px;border:1px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:14px;color:var(--fg);background:#fff;margin-bottom:10px;}
+  .input:focus{outline:0;border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,0.2);}
+  label{display:block;font-size:12px;font-weight:600;color:var(--slate-600);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+</style></head><body>
+<label>Ollama model</label>
+<input class="input" type="text" value="llama3.2">
+<label>Ask a question</label>
+<div class="composer">
+  <textarea rows="2" placeholder="Ask a question about your document…">What does Altace do?</textarea>
+  <button class="send">Send</button>
+</div>
+</body></html>

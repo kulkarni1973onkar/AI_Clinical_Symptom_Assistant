@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:#fff;}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .sw{border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;}
+  .chip{height:78px;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-size:14px;font-weight:600;}
+  .meta{padding:8px 12px;font-family:var(--font-mono);font-size:10.5px;color:var(--fg-muted);background:#fff;}
+  .meta b{display:block;color:var(--fg);font-weight:500;}
+  h4{margin:0 0 10px;font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--slate-500);text-transform:uppercase;letter-spacing:.06em;}
+</style></head><body>
+<h4>Semantic — status colors</h4>
+<div class="grid">
+  <div class="sw"><div class="chip" style="background:#fef3c7;color:#78350f;border-left:4px solid #f59e0b">Warning</div><div class="meta"><b>--warning</b>#fef3c7 / #f59e0b</div></div>
+  <div class="sw"><div class="chip" style="background:#ccfbf1;color:#0f766e">Info</div><div class="meta"><b>--info</b>#ccfbf1 / #0f766e</div></div>
+  <div class="sw"><div class="chip" style="background:#dcfce7;color:#166534">Success</div><div class="meta"><b>--success</b>#dcfce7 / #166534</div></div>
+  <div class="sw"><div class="chip" style="background:#fee2e2;color:#991b1b">Error</div><div class="meta"><b>--error</b>#fee2e2 / #991b1b</div></div>
+</div>
+</body></html>

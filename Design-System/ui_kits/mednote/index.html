@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MedNote — UI Kit</title>
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <style>
+    html, body { margin: 0; height: 100%; background: #f8fafc; }
+    body { font-family: 'Source Sans 3', sans-serif; color: #0f172a; font-size: 17px; }
+    #root { height: 100vh; }
+    @keyframes bblink { 50% { opacity: 0; } }
+    *::-webkit-scrollbar { width: 10px; height: 10px; }
+    *::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+    textarea:focus, input:focus { outline: 0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="Sidebar.jsx"></script>
+  <script type="text/babel" src="Panels.jsx"></script>
+  <script type="text/babel" src="Chat.jsx"></script>
+  <script type="text/babel" src="state.jsx"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+    const teal = "#0f766e";
+
+    function App() {
+      const k = window.useChatbot();
+
+      return (
+        <div style={{ display: "flex", height: "100vh", background: "#fff" }}>
+          <window.Sidebar
+            onClear={k.clear}
+            model={k.model} setModel={k.setModel}
+            evidenceMax={k.evidenceMax} setEvidenceMax={k.setEvidenceMax}
+          />
+
+          <main style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, background: "#fff" }}>
+            <header style={{
+              padding: "18px 28px", borderBottom: "1px solid #e2e8f0",
+              background: "#fff", display: "flex", alignItems: "center", gap: 14,
+            }}>
+              <h1 style={{ margin: 0, fontSize: 22, fontWeight: 600, letterSpacing: "-0.3px", color: "#0f172a" }}>
+                🩺 Medical Note Assistant
+              </h1>
+              <span style={{ marginLeft: "auto", fontSize: 12, color: "#64748b", background: "#f1f5f9", padding: "4px 10px", borderRadius: 999 }}>
+                Local · Ollama {k.model}
+              </span>
+            </header>
+
+            <div style={{ flex: 1, overflow: "hidden", padding: "20px 28px", display: "flex", flexDirection: "column", minHeight: 0 }}>
+              <window.Disclaimer />
+
+              {!k.doc && (
+                <div style={{ maxWidth: 640, margin: "0 auto", width: "100%" }}>
+                  <p style={{ color: "#475569", fontSize: 14, lineHeight: 1.6, marginBottom: 18 }}>
+                    Upload a clinical note or prescription. The assistant extracts sections, identifies medications, conditions, and symptoms, gathers context from public medical sources, and explains it in plain language.
+                  </p>
+                  <window.Uploader onPickSample={k.loadSample} />
+                </div>
+              )}
+
+              {k.doc && (
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 20, flex: 1, minHeight: 0 }}>
+                  <section style={{ overflow: "auto", paddingRight: 8 }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 14 }}>
+                      <span style={{ fontSize: 16 }}>📄</span>
+                      <strong style={{ fontSize: 15, color: "#0f172a" }}>{k.doc.name}</strong>
+                      <span style={{ fontSize: 12, color: "#64748b" }}>{k.doc.size}</span>
+                    </div>
+
+                    <div style={{ marginBottom: 18 }}>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: teal, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
+                        Identified
+                      </div>
+                      <window.EntityPills label="Medications" items={k.doc.meds} kind="med" />
+                      <window.EntityPills label="Conditions" items={k.doc.conds} kind="cond" />
+                      <window.EntityPills label="Symptoms" items={k.doc.syms} kind="sym" />
+                    </div>
+
+                    <div style={{ marginBottom: 18 }}>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: teal, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
+                        Sections (via SecTag)
+                      </div>
+                      {k.doc.sections.map(s => <window.SectionCard key={s.title} title={s.title} body={s.body} />)}
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: 11, fontWeight: 600, color: teal, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
+                        Evidence sources
+                      </div>
+                      {k.doc.evidence.map(e => <window.EvidenceItem key={e.term} {...e} />)}
+                    </div>
+                  </section>
+
+                  <section style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+                    <window.ChatPanel messages={k.messages} streaming={k.streaming} onSend={k.send} />
+                  </section>
+                </div>
+              )}
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
