@@ -165,6 +165,25 @@ The Present/Absent symptom classifier is still available as
 - SecTag depends on standard headers; very free-form notes may not section
   cleanly.
 
+## Deployment on Vercel
+
+This repository includes a Vercel static deploy configuration at `vercel.json`
+and a simple landing page under `public/index.html`.
+
+> The full app is a Streamlit frontend that depends on a local Ollama model
+> server, so it cannot run directly as a Vercel serverless function without
+> being ported to a supported web framework.
+
+To preview the actual application locally:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python -m spacy download en_core_web_sm
+streamlit run app.py
+```
+
 ## License
 
 See [DISCLAIMER.md](DISCLAIMER.md). The included `SecTag.csv` is from the
