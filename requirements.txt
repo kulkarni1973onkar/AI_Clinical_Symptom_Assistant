@@ -1,0 +1,25 @@
+# Core LLM stack
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-ollama>=0.2.0
+
+# NLP
+spacy>=3.7.0,<4.0.0
+# After install:  python -m spacy download en_core_web_sm
+
+# UI
+streamlit>=1.36.0
+
+# Document loading
+pypdf>=4.0.0
+pdf2image>=1.17.0          # OCR fallback for scanned PDFs (needs poppler installed at OS level)
+Pillow>=10.0.0
+pytesseract>=0.3.10        # needs Tesseract installed at OS level
+
+# Web evidence retrieval (no API keys)
+requests>=2.31.0
+wikipedia>=1.4.0
+ddgs>=6.0.0                # successor to duckduckgo-search; both import paths handled in code
+
+# Data handling
+pandas>=2.0.0
